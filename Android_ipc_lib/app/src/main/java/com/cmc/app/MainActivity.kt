@@ -20,40 +20,6 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { requireNotNull(_binding) }
     private var operator = CmcCalcType.PLUS
 
-    private val cmcResponseCallback = object : CmcResponseCallback {
-        override fun onSuccess(bundle: Bundle) {
-            val result = bundle.getString(CmcBundleKey.KEY_RESULT_DATA)
-            PopupDialog.showDialog(
-                content = "계산결과 = $result",
-                fragmentManager = supportFragmentManager
-            )
-        }
-
-        override fun onFailure(bundle: Bundle) {
-            val resultCode = bundle.getInt(CmcBundleKey.KEY_RESULT_CODE)
-            val resultMsg = bundle.getString(CmcBundleKey.KEY_RESULT_MSG)
-            PopupDialog.showDialog(
-                content = "code = $resultCode, msg = $resultMsg",
-                fragmentManager = supportFragmentManager
-            )
-        }
-
-    }
-    private val cmcServiceConnectionCallback = object : CmcServiceConnectionCallback {
-        override fun onSuccess() {
-            showToast("연결 성공")
-        }
-
-        override fun onFailure(bundle: Bundle) {
-            val resultCode = bundle.getInt(CmcBundleKey.KEY_RESULT_CODE)
-            val resultMsg = bundle.getString(CmcBundleKey.KEY_RESULT_MSG)
-            PopupDialog.showDialog(
-                content = "code = $resultCode, msg = $resultMsg",
-                fragmentManager = supportFragmentManager
-            )
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -93,17 +59,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startAppToApp() {
-        if (CmcManager.isInstalled(this)) {
-            val cmcManager = CmcManager(this)
-            cmcManager.requestCmcCalc(
-                CmcCalcRequestParams.Builder()
-                    .setOperator(operator)
-                    .setFirstNumber(binding.editFirst.text.toString())
-                    .setSecondNumber(binding.editFirst.text.toString())
-                    .setCmcResponseCallback(cmcResponseCallback)
-                    .setCmcServiceConnectionCallback(cmcServiceConnectionCallback)
-                    .build()
-            )
+        // TODO : 앱 설치 유무로 변경
+        if (true) {
+
         } else {
             PopupDialog.showDialog(
                 content = "앱이 설치되지 않았습니다.",

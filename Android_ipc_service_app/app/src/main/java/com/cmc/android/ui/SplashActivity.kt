@@ -21,8 +21,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkAppToApp() {
-        intent.extras ?: return
-        CmcCalcServiceManager.getInstance(this).connectService()
+
     }
 
     private fun startMain(){
